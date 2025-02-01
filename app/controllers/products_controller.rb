@@ -20,26 +20,52 @@ class ProductsController < ApplicationController
   end
 
   # POST /products or /products.json
+
   def create
     @product = Product.new(product_params)
 
     respond_to do |format|
       if @product.save
-        format.turbo_stream
+        format.turbo_stream do
+          flash.now[:notice] = "Product was successfully created."
+          render turbo_stream: [
+            turbo_stream.replace("flash_messages", partial: "shared/flash"),
+            turbo_stream.append("products_list", partial: "products/product", locals: {product: @product})
+          ]
+        end
         format.html { redirect_to @product, notice: "Product was successfully created." }
       else
+        format.turbo_stream do
+          flash.now[:alert] = @product.errors.full_messages.to_sentence
+          render turbo_stream: [
+            turbo_stream.replace("flash_messages", partial: "shared/flash"),
+            turbo_stream.replace("product_form", partial: "products/form", locals: {product: @product})
+          ]
+        end
         format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /products/1 or /products/1.json
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.turbo_stream
+        format.turbo_stream do
+          flash.now[:notice] = "Product was successfully updated."
+          render turbo_stream: [
+            turbo_stream.replace("flash_messages", partial: "shared/flash"),
+            turbo_stream.replace("product_details", partial: "products/product", locals: {product: @product})
+          ]
+        end
         format.html { redirect_to @product, notice: "Product was successfully updated." }
       else
+        format.turbo_stream do
+          flash.now[:alert] = @product.errors.full_messages.to_sentence
+          render turbo_stream: [
+            turbo_stream.replace("flash_messages", partial: "shared/flash"),
+            turbo_stream.replace("product_form", partial: "products/form", locals: {product: @product})
+          ]
+        end
         format.html { render :edit, status: :unprocessable_entity }
       end
     end
@@ -63,6 +89,6 @@ class ProductsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_params
-    params.require(:product).permit(:name, :description, :price, :quantity)
+    params.require(:product).permit(:name, :description, :price, :quantity, :image)
   end
 end

@@ -1,0 +1,10 @@
+<% if flash.any? %>
+  <div class="fixed top-0 left-0 w-full p-4 z-50">
+    <% flash.each do |type, message| %>
+      <% bg_color = type == "notice" ? "bg-green-500" : "bg-red-500" %>
+      <div class="p-2 rounded-md text-white <%= bg_color %>">
+        <%= message %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

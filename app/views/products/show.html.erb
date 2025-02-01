@@ -52,14 +52,15 @@
     <% end %>
   </div>
 
-  <header class="relative bg-cover bg-center" style="background-image: url('https://i.pinimg.com/236x/d6/60/8d/d6608d1d1f1e758bcde3e4966dfb51aa.jpg');">
+
+  <header class="relative bg-cover bg-center" style="background-image: url('<%= asset_path("bg.jpg") %>');">
     <div class="absolute inset-0 bg-black opacity-50"></div>
     <div class="relative max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
       <h1 class="text-4xl font-extrabold text-white sm:text-5xl">
-        Welcome to Our Exclusive Collection
+        Welcome to Our Store
       </h1>
       <p class="mt-4 text-lg text-gray-200">
-      Discover the best products at unbeatable prices.
+      Discover our exclusive collection of products.
       </p>
     </div>
   </header>
@@ -133,7 +134,15 @@
 
     <!-- Product image -->
     <div class="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
-      <%= image_tag "https://tailwindui.com/plus/img/ecommerce-images/product-page-04-featured-product-shot.jpg", alt: @product.name, class: "aspect-square w-full rounded-lg object-cover" %>
+      <% if @product.image.attached? %>
+        <%= image_tag @product.image.variant(resize_to_limit: [600, 600]), 
+          alt: @product.name, 
+          class: "aspect-square w-full rounded-lg object-cover" %> 
+      <% else %>
+        <%= image_tag "https://tailwindui.com/plus/img/ecommerce-images/product-page-04-featured-product-shot.jpg", 
+          alt: "No image available", 
+          class: "aspect-square w-full rounded-lg object-cover" %>
+      <% end %>
     </div>
   </div>
 </div>
