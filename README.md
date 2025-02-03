@@ -1,24 +1,42 @@
-# README
+# Inventory Management System
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A simple inventory management system built with **Ruby on Rails** and **Hotwire (Turbo & Stimulus)** for real-time search and filtering.
+A very simple approach was taken including in the UI, main thing being put into consideration is just to show the skills required!
 
-Things you may want to cover:
+## Assumption
 
-* Ruby version
+This app is only for admins hence no need for th namespacing in the routes to show admins or dashbord
 
-* System dependencies
+## Features
 
-* Configuration
+- Search products dynamically using **Turbo & Stimulus.js**
+- Filter products by **price range**
+- Sort products by **name, price, or quantity**
+- Auto-submit search form with **debounced input**
+- Fully tested with **Minitest**
 
-* Database creation
+### How to test hotwire interactivity
 
-* Database initialization
+Create a product which the stock quantity is 10 or less and go to the show page a pop up will show the hotwire flash message and then it is also wiped out after thirty seconds.
 
-* How to run the test suite
+## Setup Instructions
 
-* Services (job queues, cache servers, search engines, etc.)
+### Prerequisites
 
-* Deployment instructions
+Ensure you have:
 
-* ...
+- Ruby 3.x
+- Rails 7.x
+- PostgreSQL
+
+### Installation
+
+Clone the repository and install dependencies:
+
+```sh
+git clone https://github.com/mwaurajr/inventory-system
+cd inventory_management
+bundle install
+rails db:setup
+
+```

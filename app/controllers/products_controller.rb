@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
             turbo_stream.append("products_list", partial: "products/product", locals: {product: @product})
           ]
         end
-        format.html { redirect_to @product, notice: "Product was successfully created." }
+        format.html { redirect_to products_path, notice: "Product was successfully created." }
       else
         format.turbo_stream do
           flash.now[:alert] = @product.errors.full_messages.to_sentence
@@ -69,7 +69,7 @@ class ProductsController < ApplicationController
     @product.destroy
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
+      format.html { redirect_to products_path, notice: "Product was successfully destroyed." }
     end
   end
 

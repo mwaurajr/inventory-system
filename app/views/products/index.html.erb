@@ -62,12 +62,12 @@
               <div class="aspect-square relative">
                 <% if product.image.attached? %>
                   <%= image_tag product.image.variant(resize_to_limit: [400, 400]), 
-                      alt: product.name, 
-                      class: "w-full h-full object-cover transition-opacity group-hover:opacity-75" %>
+                    alt: product.name, 
+                    class: "w-full h-full object-cover transition-opacity group-hover:opacity-75" %>
                 <% else %>
                   <%= image_tag "https://tailwindui.com/plus/img/ecommerce-images/category-page-05-image-card-01.jpg", 
-                      alt: product.name, 
-                      class: "w-full h-full object-cover transition-opacity group-hover:opacity-75" %>
+                    alt: product.name, 
+                    class: "w-full h-full object-cover transition-opacity group-hover:opacity-75" %>
                 <% end %>
               </div>
 
@@ -79,15 +79,15 @@
                       <%= truncate(product.name, length: 20) %>
                     <% end %>
                   </h3>
-                  
+
                   <p class="text-base font-medium text-gray-900">
-                    $<%= sprintf('%.2f', product.price) %>
+                  $<%= sprintf('%.2f', product.price) %>
                   </p>
                 </div>
 
                 <div class="mt-2 flex items-center justify-between">
                   <p class="text-sm font-medium <%= 
-                    product.quantity.zero? ? 'text-red-600' : 
+                  product.quantity.zero? ? 'text-red-600' : 
                     product.quantity <= 10 ? 'text-yellow-600' : 'text-green-600' %>">
                     <%= product.quantity.zero? ? 'Out of Stock' : "#{product.quantity} in stock" %>
                   </p>
