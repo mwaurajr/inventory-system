@@ -1,5 +1,30 @@
 <div class="bg-white">
+
+  
+<div class="flex justify-center mb-10">
+  <%= form_with url: products_path, method: :get, 
+      class: "relative w-full max-w-md",
+      data: { turbo_action: "replace", controller: "autosubmit", turbo_permanent: "" } do |form| %>
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+      </svg>
+    </div>
+    <%= form.text_field :name,
+        placeholder: "Search products",
+        class: "block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full 
+                 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
+                 text-base text-gray-900 placeholder-gray-400",
+        data: { 
+          action: "input->autosubmit#submit",
+          autosubmit_target: "input"
+        } %>
+  <% end %>
+</div>
+
+
   <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
+
     <h2 class="sr-only">Products</h2>
 
     <!-- Product Grid -->

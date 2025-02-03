@@ -4,6 +4,8 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @products = Product.all.order(:name)
+    @products = @products.where("products.name like ?", "%#{params[:name]}%") if params[:name].present?
+    @products = @products.order(params.slice("column", "direction").values.join(" "))
   end
 
   # GET /products/1 or /products/1.json

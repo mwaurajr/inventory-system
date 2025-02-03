@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import AutosubmitController from "./autosubmit_controller"
+application.register("autosubmit", AutosubmitController)
+
 import NotificationController from "./notification_controller"
 application.register("notification", NotificationController)
