@@ -1,14 +1,13 @@
-
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   initialize() {
     this.debouncedSubmit = this.debounce(() => {
       this.element.requestSubmit();
-    }, 500);
+    }, 500); // Adjust delay as needed
   }
 
-  // A generic debounce implementation
+  // Simple debounce implementation
   debounce(func, delay) {
     let timer;
     return function (...args) {
@@ -19,7 +18,6 @@ export default class extends Controller {
     };
   }
 
-  // This method is called on each input event (attached via data-action)
   submit() {
     this.debouncedSubmit();
   }

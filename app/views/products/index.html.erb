@@ -1,67 +1,110 @@
-<div class="bg-white">
-
-  
-<div class="flex justify-center mb-10">
-  <%= form_with url: products_path, method: :get, 
-      class: "relative w-full max-w-md",
-      data: { turbo_action: "replace", controller: "autosubmit", turbo_permanent: "" } do |form| %>
-    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-      <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-      </svg>
-    </div>
-    <%= form.text_field :name,
-        placeholder: "Search products",
-        class: "block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full 
-                 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
-                 text-base text-gray-900 placeholder-gray-400",
-        data: { 
-          action: "input->autosubmit#submit",
-          autosubmit_target: "input"
-        } %>
-  <% end %>
-</div>
-
-
-  <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
-
-    <h2 class="sr-only">Products</h2>
-
-    <!-- Product Grid -->
-    <div class="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
-      <% @products.each do |product| %>
-        <div class="group relative border-r border-b border-gray-200 p-4 sm:p-6">
-          <!-- Placeholder image (replace with product.image if available) -->
-
-          <% if product.image.attached? %>
-            <%= image_tag product.image.variant(resize_to_limit: [400, 400]), alt: product.name, class: "aspect-square rounded-lg bg-gray-200 object-cover group-hover:opacity-75" %>
-          <% else %>
-            <!-- Fallback image if no file is attached -->
-            <%= image_tag "https://tailwindui.com/plus/img/ecommerce-images/category-page-05-image-card-01.jpg", alt: product.name, class: "aspect-square rounded-lg bg-gray-200 object-cover group-hover:opacity-75" %>
-          <% end %>
-
-
-          <div class="pt-10 pb-4 text-center">
-            <h3 class="text-sm font-medium text-gray-900">
-              <%= link_to product_path(product) do %>
-                <span aria-hidden="true" class="absolute inset-0"></span>
-                <%= product.name %>
-              <% end %>
-            </h3>
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex justify-center mb-10">
+      <%= form_with url: products_path, method: :get, local: false, 
+        class: "w-full max-w-4xl",
+        data: { turbo_action: "replace", controller: "autosubmit" } do |form| %>
+        <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+          <div class="relative w-full">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <%= form.text_field :name,
+              placeholder: "Search by product name",
+              class: "block mt-2 w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
+                       text-base text-gray-900 placeholder-gray-400",
+                       data: { action: "input->autosubmit#submit" } %>
           </div>
 
-          <p class="mt-4 text-base font-medium text-gray-900">
-          $<%= sprintf('%.2f', product.price) %>
-          </p>
+          <div class="w-full">
+            <%= form.label :min_price, "Min Price", class: "block text-sm font-medium text-gray-700 mb-1" %>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-400 text-base">$</span>
+              </div>
+              <%= form.number_field :min_price,
+                placeholder: "0",
+                step: 0.01,
+                class: "block w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md 
+                         focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
+                         text-base text-gray-900 placeholder-gray-400" %>
+            </div>
+          </div>
 
-          <!-- Stock level display with conditional coloring -->
-          <p class="mt-2 text-sm font-medium <%= product.quantity.zero? ? 'text-red-600' : product.quantity <= 10 ? 'text-yellow-600' : 'text-green-600' %>">
-          <%= product.quantity.zero? ? 'Out of Stock' : "#{product.quantity} in stock" %>
-          </p>
+          <div class="w-full">
+            <%= form.label :max_price, "Max Price", class: "block text-sm font-medium text-gray-700 mb-1" %>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-400 text-base">$</span>
+              </div>
+              <%= form.number_field :max_price,
+                placeholder: "100",
+                step: 0.01,
+                class: "block w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md 
+                         focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
+                         text-base text-gray-900 placeholder-gray-400" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mx-auto max-w-7xl">
+      <h2 class="sr-only">Products</h2>
+
+      <% if @products.any? %>
+        <div class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
+          <% @products.each do |product| %>
+            <div class="group relative bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300">
+              <div class="aspect-square relative">
+                <% if product.image.attached? %>
+                  <%= image_tag product.image.variant(resize_to_limit: [400, 400]), 
+                      alt: product.name, 
+                      class: "w-full h-full object-cover transition-opacity group-hover:opacity-75" %>
+                <% else %>
+                  <%= image_tag "https://tailwindui.com/plus/img/ecommerce-images/category-page-05-image-card-01.jpg", 
+                      alt: product.name, 
+                      class: "w-full h-full object-cover transition-opacity group-hover:opacity-75" %>
+                <% end %>
+              </div>
+
+              <div class="p-4">
+                <div class="flex justify-between items-center">
+                  <h3 class="text-sm font-semibold text-gray-900">
+                    <%= link_to product_path(product), class: "hover:text-indigo-600" do %>
+                      <span aria-hidden="true" class="absolute inset-0"></span>
+                      <%= truncate(product.name, length: 20) %>
+                    <% end %>
+                  </h3>
+                  
+                  <p class="text-base font-medium text-gray-900">
+                    $<%= sprintf('%.2f', product.price) %>
+                  </p>
+                </div>
+
+                <div class="mt-2 flex items-center justify-between">
+                  <p class="text-sm font-medium <%= 
+                    product.quantity.zero? ? 'text-red-600' : 
+                    product.quantity <= 10 ? 'text-yellow-600' : 'text-green-600' %>">
+                    <%= product.quantity.zero? ? 'Out of Stock' : "#{product.quantity} in stock" %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-12">
+          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h3 class="mt-2 text-sm font-medium text-gray-900">No products found</h3>
+          <p class="mt-1 text-sm text-gray-500">Try adjusting your search or filter criteria.</p>
         </div>
       <% end %>
     </div>
   </div>
 </div>
-
-

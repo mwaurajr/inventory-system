@@ -1,9 +1,7 @@
 <div class="bg-white">
 
-  <!-- Improved Notification Container -->
   <div class="flex justify-center items-center p-4">
     <% if @product.quantity.zero? || @product.quantity <= 10 %>
-      <%# Set variables based on stock level %>
       <% if @product.quantity.zero? %>
         <% bg = "bg-red-50" %>
         <% border = "border-red-400" %>
@@ -65,9 +63,7 @@
     </div>
   </header>
 
-  <!-- Main Product Content -->
   <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-    <!-- Product details -->
     <div class="lg:max-w-lg lg:self-end">
       <div class="mt-4">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"><%= @product.name %></h1>
@@ -80,7 +76,6 @@
           <div class="ml-4 border-l border-gray-300 pl-4">
             <h2 class="sr-only">Reviews</h2>
             <div class="flex items-center">
-              <!-- (Optional: Add review stars or count here) -->
             </div>
           </div>
         </div>
@@ -88,7 +83,6 @@
           <p class="text-base text-gray-500"><%= @product.description %></p>
         </div>
 
-        <!-- Stock Level Display at Bottom with Icon -->
         <div class="mt-6 flex items-center">
           <% if @product.quantity.zero? %>
             <svg xmlns="http://www.w3.org/2000/svg" class="fill-current h-6 w-6 text-red-500 inline-block ml-2" viewBox="0 0 192.146 192.146">
@@ -132,7 +126,6 @@
       </section>
     </div>
 
-    <!-- Product image -->
     <div class="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
       <% if @product.image.attached? %>
         <%= image_tag @product.image.variant(resize_to_limit: [600, 600]), 

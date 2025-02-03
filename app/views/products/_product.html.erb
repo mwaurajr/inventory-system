@@ -1,13 +1,6 @@
-<tr id="product_<%= product.id %>">
-  <td class="py-2 px-4 border-b"><%= product.name %></td>
-  <td class="py-2 px-4 border-b"><%= product.description %></td>
-  <td class="py-2 px-4 border-b">$<%= sprintf('%.2f', product.price) %></td>
-  <td class="py-2 px-4 border-b <%= product.stock_status_class %>">
-    <%= product.stock_display %>
-  </td>
-  <td class="py-2 px-4 border-b">
-    <%= link_to 'Edit', edit_product_path(product), class: "text-blue-500 hover:underline" %> |
-    <%= link_to 'Delete', product, data: { turbo_confirm: "Are you sure?" }, method: :delete, class: "text-red-500 hover:underline" %>
-  </td>
-</tr>
+<div class="flex items-center space-x-2 mt-2 p-4">
+  <%= button_to "+", increase_product_path(@product), method: :patch, remote: true, class: "bg-green-500 text-white cursor-pointer rounded px-2 py-1" %>
+  <span class="font-bold"><%= @product.quantity %></span>
+  <%= button_to "−", decrease_product_path(@product), method: :patch, remote: true, class: "bg-red-500 text-white cursor-pointer rounded px-2 py-1" %>
+</div>
 
