@@ -1,11 +1,11 @@
 # Inventory Management System
 
 A simple inventory management system built with **Ruby on Rails** and **Hotwire (Turbo & Stimulus)** for real-time search and filtering.
-A very simple approach was taken including in the UI, main thing being put into consideration is just to show the skills required!
+A very simple approach was taken including in the UI, the main thing being put into consideration is to show the skills required!
 
 ## Assumption
 
-This app is only for admins hence no need for th namespacing in the routes to show admins or dashbord
+This app is only for admins hence no need for the namespacing in the routes to show admins or the dashboard
 
 ## Features
 
@@ -17,7 +17,7 @@ This app is only for admins hence no need for th namespacing in the routes to sh
 
 ### How to test hotwire interactivity
 
-Create a product which the stock quantity is 10 or less and go to the show page a pop up will show the hotwire flash message and then it is also wiped out after thirty seconds.
+Create a product whose stock quantity is 10 or less and go to the show page a pop-up will show the hotwire flash message and then it is also wiped out after thirty seconds.
 
 ## Setup Instructions
 
