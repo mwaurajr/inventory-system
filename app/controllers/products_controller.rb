@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
   def index
+    flash.now[:notice] = "Welcome to Inventory Hub, you're signed in as an admin."
     @products = Product.filter(params)
   end
 
