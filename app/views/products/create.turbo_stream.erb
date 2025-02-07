@@ -1,4 +1,5 @@
 <%= turbo_stream.append "products" do %>
   <%= render partial: "product", locals: { product: @product } %>
 <% end %>
+<%= turbo_stream.update Product.new, "" %>
 

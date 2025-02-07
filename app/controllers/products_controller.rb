@@ -6,71 +6,44 @@ class ProductsController < ApplicationController
     @products = Product.filter(params)
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @product = Product.new
   end
 
-  def edit; end
+  def edit
+  end
 
   def create
     @product = Product.new(product_params)
-    respond_to do |format|
-      if @product.save
+    if @product.save
+      respond_to do |format|
+        format.html { redirect_to quotes_path, notice: "#{@product.name} was successfully created." }
         format.turbo_stream do
-          flash.now[:notice] = 'Product was successfully created.'
+          @products = Product.order(:name)
+          flash.now[:notice] = "#{@product.name} was successfully created."
           render turbo_stream: [
-            # Replace the flash messages section with updated content
-            turbo_stream.replace('flash_messages', partial: 'shared/flash'),
-
-            # Add the new product to the products grid
-            turbo_stream.append('products_grid', partial: 'products/product', locals: { product: @product }),
-
-            # Clear the modal/form after successful creation
-            turbo_stream.replace('new_product_modal', '')
+            turbo_stream.prepend("products", partial: "products/product", locals: {product: @product}),
+            turbo_stream.update("flash", partial: "shared/flash"),
+            turbo_stream.replace("main", template: "products/index")
           ]
         end
-        # Fallback for non-Turbo requests
-        format.html { redirect_to products_path, notice: 'Product was successfully created.' }
-      else
-        format.turbo_stream do
-          flash.now[:alert] = @product.errors.full_messages.to_sentence
-          render turbo_stream: [
-            # Update flash messages to show errors
-            turbo_stream.replace('flash_messages', partial: 'shared/flash'),
-
-            # Re-render the form with errors
-            turbo_stream.replace('product_form', partial: 'products/form', locals: { product: @product })
-          ]
-        end
-        # Fallback for non-Turbo requests
-        format.html { render :new, status: :unprocessable_entity }
       end
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @product.update(product_params)
-        format.turbo_stream do
-          flash.now[:notice] = 'Product was successfully updated.'
-          render turbo_stream: [
-            turbo_stream.replace('flash_messages', partial: 'shared/flash'),
-            turbo_stream.replace('product_details', partial: 'products/product', locals: { product: @product })
-          ]
-        end
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
-      else
-        format.turbo_stream do
-          flash.now[:alert] = @product.errors.full_messages.to_sentence
-          render turbo_stream: [
-            turbo_stream.replace('flash_messages', partial: 'shared/flash'),
-            turbo_stream.replace('product_form', partial: 'products/form', locals: { product: @product })
-          ]
-        end
-        format.html { render :edit, status: :unprocessable_entity }
+    if @product.update(product_params)
+      respond_to do |format|
+        format.html { redirect_to quotes_path, notice: "#{@product.name} was successfully created." }
+        format.turbo_stream { flash.now[:notice] = "#{@product.name} was successfully created." }
       end
+    else
+      render :new
     end
   end
 
@@ -78,7 +51,7 @@ class ProductsController < ApplicationController
     @product.destroy
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to products_path, notice: 'Product was successfully destroyed.' }
+      format.html { redirect_to products_path, notice: "Product was successfully destroyed." }
     end
   end
 

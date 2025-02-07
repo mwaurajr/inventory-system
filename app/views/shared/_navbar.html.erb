@@ -5,20 +5,21 @@
     </svg>
     <h1 class="text-3xl font-extrabold text-gray-900">Inventory Hub</h1>
   <% end %>
-  
+
   <div class="flex items-center space-x-4">
     <%= link_to admin_products_path, 
-        class: "text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium",
-        data: { turbo_frame: "main" } do %>
+      class: "text-gray-700 hover:text-indigo-600 transition-colors duration-300 font-medium",
+      data: { turbo_frame: "main" } do %>
       Dashboard
     <% end %>
-    
+
     <%= link_to new_product_path, 
-        data: { turbo_frame: dom_id(Product.new) },
-        class: "inline-flex items-center px-4 py-2 bg-indigo-600 text-white 
+      data: { turbo_frame: dom_id(Product.new) },
+      class: "inline-flex items-center px-4 py-2 bg-indigo-600 text-white 
                 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
                 transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 shadow-lg" do %>
-      New Product
-    <% end %>
+                New Product
+              <% end %>
   </div>
+  <%= turbo_frame_tag Product.new %>
 </div>

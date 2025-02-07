@@ -18,10 +18,8 @@
       <%= render 'shared/flash' %>
     </div>
     <%= render "shared/navbar" %>
-    <main class="mt-10">
-      <%= turbo_frame_tag "main" do %>
-        <%= yield %>
-      <% end %>
+    <main id="main" class="mt-10">
+      <%= yield %>
     </main>
   </body>
 </html>

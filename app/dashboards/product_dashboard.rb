@@ -1,4 +1,4 @@
-require 'administrate/base_dashboard'
+require "administrate/base_dashboard"
 
 class ProductDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
@@ -8,7 +8,7 @@ class ProductDashboard < Administrate::BaseDashboard
     name: Field::String,
     price: Field::Number.with_options(
       searchable: false,
-      prefix: '$',
+      prefix: "$",
       decimals: 2
     ),
     quantity: Field::Number,

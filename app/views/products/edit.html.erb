@@ -13,12 +13,11 @@
   </div>
 
 
-  
+
   <%= turbo_frame_tag @product do %>
-<%= link_to sanitize("&larr; Back to product"), product_path(@product) %>
+    <%= link_to sanitize("&larr; Back to product"), product_path(@product) %>
     <div class="max-w-4xl mx-auto">
       <%= render "products/form", product: @product %>
     </div>
   <% end %>
-
 </div>
