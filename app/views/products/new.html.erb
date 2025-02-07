@@ -1,20 +1,20 @@
-<% content_for :title, "New product" %>
+<% content_for :title, "New Product" %>
 
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50 rounded-lg shadow-md">
   <div class="mb-8 flex items-center justify-between">
-    <h1 class="text-4xl font-bold tracking-tight text-gray-900">New product</h1>
-    <%= link_to products_path, 
-      class: "inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900" do %>
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900">New Product</h1>
+    <%= link_to products_path, class: "inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900" do %>
       <svg class="mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
         <path fill-rule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 4.158a.75.75 0 11-1.04 1.04l-5.5-5.5a.75.75 0 010-1.06l5.5-5.5a.75.75 0 111.04 1.04L5.612 9.25H16.25A.75.75 0 0117 10z" clip-rule="evenodd" />
       </svg>
-      Back to products
+      Back to Products
     <% end %>
   </div>
 
-  <turbo-frame id="product_form">
+  <%= turbo_frame_tag @product do %>
     <div class="max-w-4xl mx-auto">
       <%= render "form", product: @product %>
     </div>
-  </turbo-frame>
+  <% end %>
 </div>

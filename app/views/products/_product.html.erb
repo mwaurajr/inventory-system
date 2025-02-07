@@ -1,4 +1,4 @@
-<div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+<%= turbo_frame_tag product do %>
   <div class="lg:max-w-lg lg:self-end">
     <div class="mt-4">
       <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"><%= product.name %></h1>
@@ -83,4 +83,5 @@
         class: "aspect-square w-full rounded-lg object-cover" %>
     <% end %>
   </div>
-</div>
+  </div>
+<% end %>
