@@ -26,7 +26,7 @@ class ProductsController < ApplicationController
           flash.now[:notice] = "#{@product.name} was successfully created."
           render turbo_stream: [
             turbo_stream.prepend("products", partial: "products/product", locals: {product: @product}),
-            turbo_stream.update("flash", partial: "shared/flash"),
+            turbo_stream.update("flash_messages", partial: "shared/flash"),
             turbo_stream.replace("main", template: "products/index")
           ]
         end
