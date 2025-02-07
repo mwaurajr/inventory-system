@@ -18,51 +18,32 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-
-    respond_to do |format|
-      if @product.save
+    if @product.save
+      respond_to do |format|
+        format.html { redirect_to quotes_path, notice: "#{@product.name} was successfully created." }
         format.turbo_stream do
-          flash.now[:notice] = "Product was successfully created."
+          @products = Product.order(:name)
+          flash.now[:notice] = "#{@product.name} was successfully created."
           render turbo_stream: [
-            turbo_stream.replace("flash_messages", partial: "shared/flash"),
-            turbo_stream.append("products_list", partial: "products/product", locals: {product: @product})
+            turbo_stream.prepend("products", partial: "products/product", locals: {product: @product}),
+            turbo_stream.update("flash", partial: "shared/flash"),
+            turbo_stream.replace("main", template: "products/index")
           ]
         end
-        format.html { redirect_to products_path, notice: "Product was successfully created." }
-      else
-        format.turbo_stream do
-          flash.now[:alert] = @product.errors.full_messages.to_sentence
-          render turbo_stream: [
-            turbo_stream.replace("flash_messages", partial: "shared/flash"),
-            turbo_stream.replace("product_form", partial: "products/form", locals: {product: @product})
-          ]
-        end
-        format.html { render :new, status: :unprocessable_entity }
       end
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @product.update(product_params)
-        format.turbo_stream do
-          flash.now[:notice] = "Product was successfully updated."
-          render turbo_stream: [
-            turbo_stream.replace("flash_messages", partial: "shared/flash"),
-            turbo_stream.replace("product_details", partial: "products/product", locals: {product: @product})
-          ]
-        end
-        format.html { redirect_to @product, notice: "Product was successfully updated." }
-      else
-        format.turbo_stream do
-          flash.now[:alert] = @product.errors.full_messages.to_sentence
-          render turbo_stream: [
-            turbo_stream.replace("flash_messages", partial: "shared/flash"),
-            turbo_stream.replace("product_form", partial: "products/form", locals: {product: @product})
-          ]
-        end
-        format.html { render :edit, status: :unprocessable_entity }
+    if @product.update(product_params)
+      respond_to do |format|
+        format.html { redirect_to quotes_path, notice: "#{@product.name} was successfully created." }
+        format.turbo_stream { flash.now[:notice] = "#{@product.name} was successfully created." }
       end
+    else
+      render :new
     end
   end
 

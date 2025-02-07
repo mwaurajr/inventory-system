@@ -4,6 +4,8 @@ class Product < ApplicationRecord
   validates :price, numericality: {greater_than_or_equal_to: 0}
   validates :quantity, numericality: {greater_than_or_equal_to: 0}
 
+  broadcasts_to ->(_product) { "products" }, inserts_by: :prepend
+
   scope :name_like, ->(term) { where("LOWER(name) LIKE ?", "%#{term.downcase}%") if term.present? }
   scope :min_price, ->(price) { where("price >= ?", price) if price.present? }
   scope :max_price, ->(price) { where("price <= ?", price) if price.present? }

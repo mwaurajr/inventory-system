@@ -1,86 +1,33 @@
-<div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-  <div class="lg:max-w-lg lg:self-end">
-    <div class="mt-4">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"><%= product.name %></h1>
-    </div>
-
-    <section aria-labelledby="information-heading" class="mt-4">
-      <h2 id="information-heading" class="sr-only">Product information</h2>
-      <div class="flex items-center">
-        <p class="text-lg text-gray-900 sm:text-xl">$<%= sprintf('%.2f', product.price) %></p>
-        <div class="ml-4 border-l border-gray-300 pl-4">
-          <h2 class="sr-only">Reviews</h2>
-          <div class="flex items-center">
-          </div>
-        </div>
-      </div>
-      <div class="mt-4 space-y-6">
-        <p class="text-base text-gray-500"><%= product.description %></p>
-      </div>
-
-      <div class="mt-6 flex items-center">
-        <% if product.quantity.zero? %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="fill-current h-6 w-6 text-red-500 inline-block ml-2" viewBox="0 0 192.146 192.146">
-            <g>
-            <g>
-            <g>
-            <path d="M108.186,144.372c0,7.054-4.729,12.32-12.037,12.32h-0.254c-7.054,0-11.92-5.266-11.92-12.32
-                     c0-7.298,5.012-12.31,12.174-12.31C103.311,132.062,108.059,137.054,108.186,144.372z M88.44,125.301h15.447l2.951-61.298H85.46
-                     L88.44,125.301z M190.372,177.034c-2.237,3.664-6.214,5.921-10.493,5.921H12.282c-4.426,0-8.51-2.384-10.698-6.233
-                     c-2.159-3.849-2.11-8.549,0.147-12.349l84.111-149.22c2.208-3.722,6.204-5.96,10.522-5.96h0.332
-                     c4.445,0.107,8.441,2.618,10.513,6.546l83.515,149.229C192.717,168.768,192.629,173.331,190.372,177.034z M179.879,170.634
-                     L96.354,21.454L12.292,170.634H179.879z"/>
-            </g>
-            </g>
-            </g>
-          </svg>
-          <p class="ml-2 text-sm text-red-600 font-medium">Out of Stock</p>
-        <% elsif product.quantity <= 10 %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="fill-current h-6 w-6 text-yellow-400 inline-block ml-2" viewBox="0 0 192.146 192.146">
-            <g>
-            <g>
-            <g>
-            <path d="M108.186,144.372c0,7.054-4.729,12.32-12.037,12.32h-0.254c-7.054,0-11.92-5.266-11.92-12.32
-                     c0-7.298,5.012-12.31,12.174-12.31C103.311,132.062,108.059,137.054,108.186,144.372z M88.44,125.301h15.447l2.951-61.298H85.46
-                     L88.44,125.301z M190.372,177.034c-2.237,3.664-6.214,5.921-10.493,5.921H12.282c-4.426,0-8.51-2.384-10.698-6.233
-                     c-2.159-3.849-2.11-8.549,0.147-12.349l84.111-149.22c2.208-3.722,6.204-5.96,10.522-5.96h0.332
-                     c4.445,0.107,8.441,2.618,10.513,6.546l83.515,149.229C192.717,168.768,192.629,173.331,190.372,177.034z M179.879,170.634
-                     L96.354,21.454L12.292,170.634H179.879z"/>
-            </g>
-            </g>
-            </g>
-          </svg>
-          <p class="ml-2 text-sm text-yellow-600 font-medium"><%= product.quantity %> in stock</p>
-        <% else %>
-          <svg class="h-6 w-6 text-green-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/>
-          </svg>
-          <p class="ml-2 text-sm text-green-600 font-medium"><%= product.quantity %> in stock</p>
-        <% end %>
-      </div>
-
-
-      <div class="p-4">
-        <div class="flex justify-between items-center">
-          <div class="flex space-x-4">
-            <%= link_to "Edit", edit_product_path(product), class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" %>
-            <%= button_to "Delete", product_path(product), method: :delete, data: { confirm: "Are you sure?" }, class: "px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600" %>
-          </div>
-        </div>
-      </div>
-
-    </section>
-  </div>
-
-  <div class="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
+<div class="group relative bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300">
+  <div class="aspect-square relative">
     <% if product.image.attached? %>
-      <%= image_tag product.image.variant(resize_to_limit: [600, 600]), 
+      <%= image_tag product.image.variant(resize_to_limit: [400, 400]), 
         alt: product.name, 
-        class: "aspect-square w-full rounded-lg object-cover" %> 
+        class: "w-full h-full object-cover transition-opacity group-hover:opacity-75" %>
     <% else %>
-      <%= image_tag "https://tailwindui.com/plus/img/ecommerce-images/product-page-04-featured-product-shot.jpg", 
-        alt: "No image available", 
-        class: "aspect-square w-full rounded-lg object-cover" %>
+      <%= image_tag "https://tailwindui.com/plus/img/ecommerce-images/category-page-05-image-card-01.jpg", 
+        alt: product.name, 
+        class: "w-full h-full object-cover transition-opacity group-hover:opacity-75" %>
     <% end %>
+  </div>
+  <div class="p-4">
+    <div class="flex justify-between items-center">
+      <h3 class="text-sm font-semibold text-gray-900">
+        <%= link_to product_path(product), class: "hover:text-indigo-600", data: { turbo_frame: "_top" } do %>
+          <span aria-hidden="true" class="absolute inset-0"></span>
+          <%= truncate(product.name, length: 20) %>
+        <% end %>
+      </h3>
+      <p class="text-base font-medium text-gray-900">
+        $<%= sprintf('%.2f', product.price) %>
+      </p>
+    </div>
+    <div class="mt-2 flex items-center justify-between">
+      <p class="text-sm font-medium <%= 
+        product.quantity.zero? ? 'text-red-600' : 
+        product.quantity <= 10 ? 'text-yellow-600' : 'text-green-600' %>">
+        <%= product.quantity.zero? ? 'Out of Stock' : "#{product.quantity} in stock" %>
+      </p>
+    </div>
   </div>
 </div>

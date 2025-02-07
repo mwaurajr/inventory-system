@@ -12,12 +12,13 @@
     <%= javascript_importmap_tags %>
   </head>
 
+
   <body>
     <div id="flash_messages" class="flex justify-center mt-4">
       <%= render 'shared/flash' %>
     </div>
-    <main class="mt-10">
-      <%= render "shared/navbar" %>
+    <%= render "shared/navbar" %>
+    <main id="main" class="mt-10">
       <%= yield %>
     </main>
   </body>
