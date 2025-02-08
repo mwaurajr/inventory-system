@@ -1,3 +1,4 @@
+require "csv"
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
@@ -55,6 +56,16 @@ class ProductsController < ApplicationController
     end
   end
 
+  def export
+    @products = Product.all.order(:name)
+
+    respond_to do |format|
+      format.csv { send_data generate_csv(@products), filename: "products-#{Date.today}.csv" }
+      format.xlsx { send_data generate_excel(@products), filename: "products-#{Date.today}.xlsx" }
+      format.html { redirect_to products_path, notice: "Export format not supported." }
+    end
+  end
+
   private
 
   def set_product
@@ -63,5 +74,30 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :description, :price, :quantity, :image)
+  end
+
+  def generate_csv(products)
+    CSV.generate(headers: true) do |csv|
+      # Define the header row
+      csv << ["ID", "Name", "Description", "Price", "Quantity", "Created At"]
+      # Add a row for each product
+      products.each do |product|
+        csv << [product.id, product.name, product.description, product.price, product.quantity, product.created_at]
+      end
+    end
+  end
+
+  def generate_excel(products)
+    package = Axlsx::Package.new
+    workbook = package.workbook
+
+    workbook.add_worksheet(name: "Products") do |sheet|
+      sheet.add_row ["ID", "Name", "Description", "Price", "Quantity", "Created At"]
+      products.each do |product|
+        sheet.add_row [product.id, product.name, product.description, product.price, product.quantity, product.created_at]
+      end
+    end
+
+    package.to_stream.read
   end
 end

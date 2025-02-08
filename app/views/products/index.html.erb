@@ -8,15 +8,15 @@
           <div class="relative w-full">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 5.5 0 100 11 5.5 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
               </svg>
             </div>
             <%= form.text_field :name,
               placeholder: "Search by product name",
               class: "block mt-2 w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full
-                       focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
-                       text-base text-gray-900 placeholder-gray-400",
-                       data: { action: "input->autosubmit#submit" } %>
+                   focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
+                   text-base text-gray-900 placeholder-gray-400",
+                   data: { action: "input->autosubmit#submit" } %>
         </div>
 
         <div class="w-full">
@@ -29,8 +29,8 @@
               placeholder: "0",
               step: 0.01,
               class: "block w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md 
-                         focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
-                         text-base text-gray-900 placeholder-gray-400" %>
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
+                       text-base text-gray-900 placeholder-gray-400" %>
         </div>
         </div>
 
@@ -44,13 +44,19 @@
               placeholder: "100",
               step: 0.01,
               class: "block w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md 
-                         focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
-                         text-base text-gray-900 placeholder-gray-400" %>
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
+                       text-base text-gray-900 placeholder-gray-400" %>
         </div>
         </div>
         </div>
       <% end %>
+
+      <div class="flex justify-center mt-4 gap-4">
+        <%= link_to "Export CSV", export_products_path(format: :csv), class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" %>
+        <%= link_to "Export Excel", export_products_path(format: :xlsx), class: "px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700" %>
+      </div>
     </div>
+
 
     <%= turbo_stream_from "products" %>
     <div class="mx-auto max-w-7xl">

@@ -71,3 +71,5 @@ end
 
 gem "administrate"
 gem "administrate-field-active_storage"
+gem "axlsx_rails"
+gem "caxlsx"
